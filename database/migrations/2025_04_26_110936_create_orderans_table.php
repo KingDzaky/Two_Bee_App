@@ -12,9 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pelanggan_id')->constrained('pelanggans')->onDelete('cascade');
             $table->foreignId('layanan_id')->nullable()->constrained('layanans')->onDelete('set null');
-            $table->string('alamat');
-            $table->string('telepon');
-            $table->string('email')->nullable();
             $table->date('tanggal');
             $table->time('waktu');
             $table->integer('harga');
@@ -27,6 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orderans', function (Blueprint $table) {
+            $table->dropForeign(['pelanggan_id']);
+            $table->dropColumn('pelanggan_id');
             $table->dropForeign(['layanan_id']);
             $table->dropColumn('layanan_id');
         });

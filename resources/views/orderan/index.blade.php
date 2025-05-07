@@ -24,17 +24,19 @@
                     <th class="px-4 py-2">Nama</th>
                     <th class="px-4 py-2">Tanggal</th>
                     <th class="px-4 py-2">Waktu</th>
+                    <th class="px-4 py-2">Harga</th>
                     <th class="px-4 py-2">Status</th>
                     <th class="px-4 py-2">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($orderans as $orderan)
-                <tr class="border-b">
+                <tr class="border-b text-center">
                     <td class="px-4 py-2">{{ $orderan->no_nota }}</td>
                     <td>{{ $orderan->pelanggan->nama ?? $orderan->nama }}</td>
-                    <td class="px-4 py-2">{{ $orderan->tanggal }}</td>
+                    <td class="px-4 py-2">{{ \Carbon\Carbon::parse($orderan->tanggal)->format('d M Y') }}</td>
                     <td class="px-4 py-2">{{ $orderan->waktu }}</td>
+                    <td class="px-4 py-2">{{ $orderan->harga }}</td>
                     <td class="px-4 py-2">
                         <span class="px-2 py-1 rounded-full text-white
                             @if($orderan->status == 'Proses') bg-yellow-400
@@ -43,16 +45,23 @@
                             {{ $orderan->status }}
                         </span>
                     </td>
-                    <td class="px-4 py-2 flex space-x-2">
-                        <a href="{{ route('orderan.edit', $orderan->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                        <a href="{{ route('orderan.show', $orderan->id) }}" class="text-green-600 hover:underline">Show</a>
-                        <form action="{{ route('orderan.destroy', $orderan->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-red-600 hover:underline" onclick="return confirm('Yakin hapus?')">Hapus</button>
-                        </form>
+                    <td class="justify-items-center">
+                        <div class="flex items-center space-x-4">
+                            <a href="{{ route('orderan.edit', $orderan->id) }}" class="text-blue-600 hover:underline">
+                                Edit
+                            </a>
+                            <a href="{{ route('orderan.show', $orderan->id) }}" class="text-green-600 hover:underline">
+                                Show
+                            </a>
+                            <form action="{{ route('orderan.destroy', $orderan->id) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
                     </td>
-
                 </tr>
                 @endforeach
             </tbody>

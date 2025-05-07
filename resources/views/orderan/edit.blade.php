@@ -37,7 +37,7 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block font-medium">Tanggal</label>
-                <input type="date" name="tanggal" value="{{ $orderan->tanggal }}" class="w-full border p-2 rounded" required>
+                <input type="date" name="tanggal" value="{{ $orderan->tanggal->format('Y-m-d') }}" class="w-full border p-2 rounded" required>
             </div>
             <div>
                 <label class="block font-medium">Waktu</label>

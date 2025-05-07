@@ -16,15 +16,15 @@
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">Alamat:</p>
-                <p class="text-lg">{{ $orderan->alamat }}</p>
+                <p class="text-lg">{{ $orderan->pelanggan->alamat }}</p>
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">Telepon:</p>
-                <p class="text-lg">{{ $orderan->telepon }}</p>
+                <p class="text-lg">{{ $orderan->pelanggan->telepon }}</p>
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">Email:</p>
-                <p class="text-lg">{{ $orderan->email ?? '-' }}</p>
+                <p class="text-lg">{{ $orderan->pelanggan->email ?? '-' }}</p>
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">Tanggal Order:</p>
@@ -32,11 +32,11 @@
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">Tipe Layanan:</p>
-                <p class="text-lg">{{ $orderan->tipe_layanan }}</p>
+                <p class="text-lg">{{ $orderan->layanan->nama_layanan }}</p>
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">Harga:</p>
-                <p class="text-lg font-bold text-green-500">Rp{{ number_format($orderan->harga, 0, ) }}</p>
+                <p class="text-lg font-bold text-green-500">Rp{{ number_format($orderan->harga, 0 ) }}</p>
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">No Nota:</p>

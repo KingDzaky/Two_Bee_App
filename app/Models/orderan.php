@@ -11,13 +11,9 @@ class Orderan extends Model
 
     protected $table = 'orderans';
     protected $primaryKey = 'id';
-
     protected $fillable = [
         'pelanggan_id',
         'layanan_id',
-        'alamat',
-        'telepon',
-        'email',
         'tanggal',
         'waktu',
         'harga',
@@ -26,8 +22,9 @@ class Orderan extends Model
     ];
 
     protected $casts = [
+        'datetime:H:i',
         'tanggal' => 'date',
-        'harga' => 'integer',
+        'harga' => 'int',
     ];
 
     // ✅ Relasi ke tabel Pelanggans

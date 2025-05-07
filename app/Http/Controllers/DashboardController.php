@@ -22,21 +22,25 @@ class DashboardController extends Controller
         $orderDiantar = Orderan::where('status', 'diantar')->count();
 
         // Grafik orderan per tanggal
-        $orderanChart = Orderan::select(
-            DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') as tanggal"),
-            DB::raw("COUNT(*) as total_order"),
-            DB::raw("SUM(harga) as total_pendapatan")
-        )
-        ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"))
-        ->orderBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"))
-        ->get()
-        ->map(function ($item) {
-            // pastikan tanggal jadi string biasa
-            $item->tanggal = (string) $item->tanggal;
-            return $item;
+        // $orderanChart = \App\Models\Orderan::select(
+        //     DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') as tanggal"),
+        //     DB::raw("COUNT(*) as total_order"),
+        //     DB::raw("SUM(harga) as total_pendapatan")
+        // )
+        // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"))
+        // ->orderBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"))
+        // ->get()
+        // ->map(function ($item) {
+        //     // pastikan tanggal jadi string biasa
+        //     $item->tanggal = (string) $item->tanggal;
+        //     return $item;
+        // });
 
-        });
-
+        $orderanChart = DB::table('orderans')
+        ->select('status', 'tanggal', DB::raw('SUM(harga) as total_pendapatan, COUNT(*) as total_order'))
+        ->where('status', '=', 'Selesai')
+        ->groupBy('tanggal', 'status')
+        ->get();
 
         // Grafik layanan favorit
         $layananFavorit = Orderan::join('layanans', 'orderans.layanan_id', '=', 'layanans.id')
