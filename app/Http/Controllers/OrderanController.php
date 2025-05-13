@@ -120,7 +120,19 @@ class OrderanController extends Controller
         $orderan->load('pelanggan'); // pastikan relasi pelanggan dimuat
         $pdf = Pdf::loadView('orderan.cetak', compact('orderan'));
         return $pdf->download('Orderan-' . $orderan->no_nota . '.pdf');
+
+
     }
+
+    public function cetakSemuaPdf()
+{
+    $orderans = Orderan::with('pelanggan')->latest()->get(); // ambil semua data
+
+    $pdf = Pdf::loadView('orderan.cetak-semua', compact('orderans'))
+              ->setPaper('A4', 'landscape');
+    return $pdf->download('Laporan-Semua-Orderan.pdf');
+}
+
 
 
     public function uploadBukti(Request $request, Orderan $orderan)

@@ -9,6 +9,12 @@
         </a>
     </div>
 
+    <a href="{{ route('orderan.cetakSemua') }}" target="_blank"
+    class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+    Cetak Semua Orderan ke PDF
+ </a>
+
+
     <form action="{{ route('orderan.index') }}" method="GET" class="mb-6">
         <div class="flex gap-2">
             <input type="text" name="search" class="w-full border border-black-300 rounded px-3 py-2" placeholder="Cari nama Orderan..." value="{{ request('search') }}">
