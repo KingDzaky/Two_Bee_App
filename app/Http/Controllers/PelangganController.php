@@ -10,10 +10,23 @@ class PelangganController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pelanggans = Pelanggan::latest()->paginate(10);
+
+        $keyword = $request->input('search');
+
+        $pelanggans = Pelanggan::when($keyword, function ($query) use ($keyword) {
+                $query->where('nama', 'like', '%' . $keyword . '%')
+                      ->orWhere('alamat', 'like', '%' . $keyword . '%')
+                      ->orWhere('telepon', 'like', '%' . $keyword . '%')
+                      ->orWhere('email', 'like', '%' . $keyword . '%');
+            })
+            ->latest()
+            ->paginate(10);
+
         return view('pelanggan.index', compact('pelanggans'));
+
+
     }
 
     public function create()
@@ -54,6 +67,10 @@ class PelangganController extends Controller
         return redirect()->route('pelanggan.index')->with('success', 'Pelanggan berhasil diperbarui.');
     }
 
+    public function show(Pelanggan $pelanggan)
+    {
+        return view('pelanggan.show', compact('pelanggan'));
+    }
     public function destroy(Pelanggan $pelanggan)
     {
         $pelanggan->delete();

@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
         $orderanChart = DB::table('orderans')
         ->select('status', 'tanggal', DB::raw('SUM(harga) as total_pendapatan, COUNT(*) as total_order'))
-        ->where('status', '=', 'Selesai')
+        ->where('status', '=', 'Diantar')
         ->groupBy('tanggal', 'status')
         ->get();
 
