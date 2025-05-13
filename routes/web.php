@@ -35,7 +35,10 @@ Route::post('/orderan/{orderan}/upload-bukti', [OrderanController::class, 'uploa
 Route::put('/orderan/{orderan}', [OrderanController::class, 'update'])->name('orderan.update');
 
 Route::get('/orderan/{orderan}/cetak-pdf', [OrderanController::class, 'cetakPdf'])->name('orderan.cetakPdf');
-Route::get('/orderan/cetak-semua', [OrderanController::class, 'cetakSemuaPdf'])->name('orderan.cetakSemua');
+Route::get('/orderan/cetak-semua', [OrderanController::class, 'cetakSemua'])->name('orderan.cetakSemua');
+
+
+
 
 
 Route::resource('pelanggan', PelangganController::class);

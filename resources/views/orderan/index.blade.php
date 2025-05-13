@@ -9,10 +9,6 @@
         </a>
     </div>
 
-    <a href="{{ route('orderan.cetakSemua') }}" target="_blank"
-    class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-    Cetak Semua Orderan ke PDF
- </a>
 
 
     <form action="{{ route('orderan.index') }}" method="GET" class="mb-6">
@@ -76,4 +72,10 @@
 
     </div>
 </div>
+
+<a href="{{ route('orderan.cetakSemua') }}" class="btn btn-danger" target="_blank">
+    <i class="fa fa-file-pdf"></i> Export PDF Semua
+</a>
+
+
 @endsection

@@ -115,6 +115,18 @@ class OrderanController extends Controller
         return redirect()->route('orderan.index')->with('success', 'Orderan berhasil dihapus.');
     }
 
+
+    public function cetakSemua()
+{
+    $orderans = Orderan::with(['pelanggan', 'layanan'])->get();
+
+    $pdf = Pdf::loadView('orderan.cetak-semua', compact('orderans'))
+                ->setPaper('A4', 'landscape');
+
+    return $pdf->download('data_orderan.pdf');
+}
+
+
     public function cetakPdf(Orderan $orderan)
     {
         $orderan->load('pelanggan'); // pastikan relasi pelanggan dimuat
@@ -123,15 +135,6 @@ class OrderanController extends Controller
 
 
     }
-
-    public function cetakSemuaPdf()
-{
-    $orderans = Orderan::with('pelanggan')->latest()->get(); // ambil semua data
-
-    $pdf = Pdf::loadView('orderan.cetak-semua', compact('orderans'))
-              ->setPaper('A4', 'landscape');
-    return $pdf->download('Laporan-Semua-Orderan.pdf');
-}
 
 
 

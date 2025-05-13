@@ -52,7 +52,7 @@
 
     <!-- Logo -->
     <div class="header">
-        <img src="{{ public_path('images/logo.png') }}" alt="Logo">
+        <img src="{{ public_path('images/logo-cuci-sepatu.jpg') }}" alt="Logo">
         <h2>INVOICE ORDERAN</h2>
     </div>
 
@@ -76,7 +76,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ $orderan->tipe_layanan }}</td>
+                <td>{{ $orderan->layanan->nama_layanan }}</td>
                 <td>Rp {{ number_format($orderan->harga, 0, ',', '.') }}</td>
                 <td>{{ $orderan->status }}</td>
             </tr>
