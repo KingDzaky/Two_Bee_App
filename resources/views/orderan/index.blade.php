@@ -27,6 +27,7 @@
                     <th class="px-4 py-2">Tanggal</th>
                     <th class="px-4 py-2">Waktu</th>
                     <th class="px-4 py-2">Harga</th>
+                    <th class="px-4 py-2">Layanan</th>
                     <th class="px-4 py-2">Status</th>
                     <th class="px-4 py-2">Aksi</th>
                 </tr>
@@ -38,7 +39,8 @@
                     <td>{{ $orderan->pelanggan->nama ?? $orderan->nama }}</td>
                     <td class="px-4 py-2">{{ \Carbon\Carbon::parse($orderan->tanggal)->format('d M Y') }}</td>
                     <td class="px-4 py-2">{{ $orderan->waktu }}</td>
-                    <td class="px-4 py-2">{{ $orderan->harga }}</td>
+                    <td class="px-4 py-2">Rp{{ number_format($orderan->harga, 0 ) }}</td>
+                    <td class="px-4 py-2">{{ $orderan->layanan->nama_layanan }}</td>
                     <td class="px-4 py-2">
                         <span class="px-2 py-1 rounded-full text-white
                             @if($orderan->status == 'Proses') bg-yellow-400
@@ -73,7 +75,7 @@
     </div>
 </div>
 
-<a href="{{ route('orderan.cetakSemua') }}" class="btn btn-danger" target="_blank">
+<a href="{{ route('orderan.cetakSemua') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" target="_blank">
     <i class="fa fa-file-pdf"></i> Export PDF Semua
 </a>
 

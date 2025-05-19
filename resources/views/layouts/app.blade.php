@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +12,7 @@
 
 </head>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <body class="font-sans antialiased bg-gray-100">
 
     <div class="flex h-screen">
@@ -18,19 +20,23 @@
         {{-- Sidebar --}}
         <aside class="w-64 bg-white shadow-md">
             <div class="p-6 text-2xl font-bold text-gray-800">
-                TwoBeeShoes
+                <img src="{{ asset('images/logo-sepatu.jpg') }}" alt="Logo Cuci Sepatu" class="h-50 w-auto">
             </div>
             <nav class="mt-6">
-                <a href="{{ route('dashboard') }}" class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('dashboard') ? 'bg-gray-200 font-bold' : '' }}">
+                <a href="{{ route('dashboard') }}"
+                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('dashboard') ? 'bg-gray-200 font-bold' : '' }}">
                     Dashboard
                 </a>
-                <a href="{{ route('orderan.index') }}" class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('orders*') ? 'bg-gray-200 font-bold' : '' }}">
+                <a href="{{ route('orderan.index') }}"
+                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('orders') ? 'bg-gray-200 font-bold' : '' }}">
                     Order
                 </a>
-                <a href="{{ route('layanan.index') }}" class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('layanan') ? 'bg-gray-200 font-bold' : '' }}">
+                <a href="{{ route('layanan.index') }}"
+                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('layanan') ? 'bg-gray-200 font-bold' : '' }}">
                     Layanan
                 </a>
-                <a href="{{ route('pelanggan.index') }}" class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('pelanggan') ? 'bg-gray-200 font-bold' : '' }}">
+                <a href="{{ route('pelanggan.index') }}"
+                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('pelanggan') ? 'bg-gray-200 font-bold' : '' }}">
                     Pelanggan
                 </a>
             </nav>
@@ -54,11 +60,14 @@
                         </svg>
                     </button>
 
-                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                    <div x-show="open" @click.away="open = false"
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                        <a href="{{ route('profile.edit') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100">
+                            <button type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100">
                                 Logout
                             </button>
                         </form>
@@ -68,9 +77,12 @@
 
             {{-- Page Content --}}
             <main class="flex-1 overflow-y-auto p-6">
-                @yield('content')
+                @if (trim($slot ?? '') !== '')
+                    {{ $slot }}
+                @else
+                    @yield('content')
+                @endif
             </main>
-
         </div>
 
     </div>
@@ -80,4 +92,5 @@
 
     @stack('scripts') {{-- Buat tambahan JS kalau perlu --}}
 </body>
+
 </html>

@@ -117,14 +117,14 @@ class OrderanController extends Controller
 
 
     public function cetakSemua()
-{
-    $orderans = Orderan::with(['pelanggan', 'layanan'])->get();
+    {
+        $orderans = Orderan::with(['pelanggan', 'layanan'])->get();
 
-    $pdf = Pdf::loadView('orderan.cetak-semua', compact('orderans'))
-                ->setPaper('A4', 'landscape');
+        $pdf = Pdf::loadView('orderan.cetak-semua', compact('orderans'))
+            ->setPaper('A4', 'landscape');
 
-    return $pdf->download('data_orderan.pdf');
-}
+        return $pdf->stream();
+    }
 
 
     public function cetakPdf(Orderan $orderan)
