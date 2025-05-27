@@ -4,7 +4,7 @@
 <div class="container mx-auto p-6">
     <h1 class="text-2xl font-bold mb-6">Edit Orderan</h1>
 
-    <form action="{{ route('orderan.update', $orderan->id) }}" method="POST" class="space-y-4">
+    <form action="{{ route('orderan.update', $orderan->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
 
@@ -71,6 +71,27 @@
         <div>
             <label class="block font-medium">No Nota</label>
             <input type="text" name="no_nota" value="{{ $orderan->no_nota }}" class="w-full border p-2 rounded" required>
+        </div>
+
+        {{-- Bukti Transfer --}}
+        <div class="mb-4">
+            <label class="block font-medium mb-1">Bukti Transfer</label>
+
+            @if ($orderan->bukti_transfer && file_exists(public_path('bukti_transfer/' . $orderan->bukti_transfer)))
+                <div class="mb-2">
+                    <img src="{{ asset('bukti_transfer/' . $orderan->bukti_transfer) }}"
+                        alt="Bukti Transfer"
+                        class="w-64 rounded shadow">
+                    <p class="text-sm text-gray-600 mt-1">File saat ini. Anda dapat menggantinya.</p>
+                </div>
+            @else
+                <div class="text-red-500 mb-2">Belum upload bukti transfer.</div>
+            @endif
+
+            {{-- Input untuk upload ulang --}}
+            <input type="file" name="bukti_transfer"
+                class="w-full border border-gray-300 p-2 rounded"
+                accept="image/*">
         </div>
 
         {{-- Status --}}

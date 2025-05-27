@@ -53,7 +53,7 @@
 
             </div>
             <div class="flex-1 mt-8 lg:mt-0 lg:ml-12">
-                <img src="https://img.freepik.com/free-vector/shoes-cleaning-service-concept_23-2148749251.jpg"
+                <img src="images/backround-sepatu.jpg"
                     alt="Cuci Sepatu" class="rounded-xl shadow-lg w-full">
             </div>
         </div>
@@ -76,20 +76,6 @@
             </div>
         </div>
     </div>
-
-
-
-    <section class="py-16 bg-[#FDFDFC] dark:bg-[#0a0a0a] text-gray-800 dark:text-gray-200">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-8">Tata Cara Pemesanan</h2>
-            <ol class="space-y-4 list-decimal list-inside">
-                <li>Isi Formulir Pemesanan</li>
-                <li>Antar atau Kirim Sepatu Anda ke Outlet Kami</li>
-                <li>Proses Pencucian Sesuai Layanan Pilihan</li>
-                <li>Pengambilan / Pengiriman Sepatu Bersih ke Anda</li>
-            </ol>
-        </div>
-    </section>
 
 
 

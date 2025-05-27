@@ -16,6 +16,7 @@ return new class extends Migration
             $table->time('waktu');
             $table->integer('harga');
             $table->string('no_nota')->unique();
+            $table->string('bukti_transfer')->nullable();
             $table->enum('status', ['Proses', 'Selesai', 'Diantar'])->default('Proses');
             $table->timestamps();
         });

@@ -49,14 +49,22 @@ class OrderanController extends Controller
             'waktu' => 'required|date_format:H:i',
             'harga' => 'required|numeric',
             'no_nota' => 'required|string|unique:orderans',
+            'bukti_transfer' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|in:Proses,Selesai,Diantar',
         ]);
+        if ($request->hasFile('bukti_transfer')) {
+            $file = $request->file('bukti_transfer');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Simpan langsung ke public/bukti_transfer
+            $file->move(public_path('bukti_transfer'), $filename);
+
+            // Simpan nama file ke database
+            $validatedData['bukti_transfer'] = $filename;
+        }
 
         $validatedData['layanan_id'] = $request->layanan_id; // ✅ TAMBAHKAN INI
-        // Bersihkan harga dari simbol selain angka
-        // $validatedData['harga'] = preg_replace('/[^0-9]/', '', $validatedData['harga']);
-        // Simpan data ke database
-        // dd($validatedData['harga']);
+
 
         Orderan::create($validatedData);
 
@@ -88,6 +96,7 @@ class OrderanController extends Controller
             'waktu' => 'required',
             'harga' => 'required',
             'no_nota' => 'required|string|unique:orderans,no_nota,' . $orderan->id,
+            'bukti_transfer' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|in:Proses,Selesai,Diantar',
         ]);
 
@@ -105,6 +114,18 @@ class OrderanController extends Controller
 
         $orderan->update($validatedData);
 
+        if ($request->hasFile('bukti_transfer')) {
+            $file = $request->file('bukti_transfer');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Simpan ke public/bukti_transfer/
+            $file->move(public_path('bukti_transfer'), $filename);
+
+            // Simpan ke database
+            $orderan->update([
+                'bukti_transfer' => $filename,
+            ]);
+        }
 
         return redirect()->route('orderan.index')->with('success', 'Orderan berhasil diperbarui.');
     }
@@ -144,15 +165,17 @@ class OrderanController extends Controller
             'bukti_transfer' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Hapus bukti lama jika ada
-        if ($orderan->bukti_transfer) {
+        // Hapus file lama jika ada
+        if ($orderan->bukti_transfer && Storage::exists('public/bukti_transfer/' . $orderan->bukti_transfer)) {
             Storage::delete('public/bukti_transfer/' . $orderan->bukti_transfer);
         }
 
-        // Simpan bukti baru
-        $fileName = time() . '.' . $request->bukti_transfer->extension();
-        $request->bukti_transfer->storeAs('public/bukti_transfer', $fileName);
+        // Upload file baru
+        $file = $request->file('bukti_transfer');
+        $fileName = time() . '_' . $file->getClientOriginalName(); // Gunakan nama unik
+        $file->storeAs('public/bukti_transfer', $fileName);
 
+        // Simpan ke database
         $orderan->update(['bukti_transfer' => $fileName]);
 
         return redirect()->back()->with('success', 'Bukti transfer berhasil diupload!');

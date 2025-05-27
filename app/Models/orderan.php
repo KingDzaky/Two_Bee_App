@@ -18,6 +18,7 @@ class Orderan extends Model
         'waktu',
         'harga',
         'no_nota',
+        'bukti_transfer',
         'status',
     ];
 

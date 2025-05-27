@@ -12,32 +12,36 @@
 
 </head>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
 
 <body class="font-sans antialiased bg-gray-100">
 
     <div class="flex h-screen">
 
         {{-- Sidebar --}}
-        <aside class="w-64 bg-white shadow-md">
+        <aside class="w-64 bg-white shadow-md transition duration-300" id="sidebar">
             <div class="p-6 text-2xl font-bold text-gray-800">
-                <img src="{{ asset('images/logo-sepatu.jpg') }}" alt="Logo Cuci Sepatu" class="h-50 w-auto">
+                <img src="{{ asset('images/logo-sepatu.jpg') }}" alt="Logo" class="h-25 w-auto mx-auto">
             </div>
-            <nav class="mt-6">
+            <nav class="mt-6 space-y-2">
                 <a href="{{ route('dashboard') }}"
-                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('dashboard') ? 'bg-gray-200 font-bold' : '' }}">
-                    Dashboard
-                </a>
+                class="flex items-center gap-2 py-2.5 px-4 rounded hover:bg-gray-200 transition duration-200 ease-in-out {{ request()->is('dashboard') ? 'bg-gray-200 font-bold' : '' }}">
+                 <i data-lucide="home" class="w-5 h-5"></i>
+                 <span>Dashboard</span>
+             </a>
+
                 <a href="{{ route('orderan.index') }}"
-                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('orders') ? 'bg-gray-200 font-bold' : '' }}">
-                    Order
+                   class="flex items-center gap-2 py-2.5 px-4 border-l-4 transition duration-200 {{ request()->routeIs('orderan.*') ? 'border-blue-500 bg-gray-100 font-bold' : 'border-transparent hover:bg-gray-100' }}">
+                    <i data-lucide="file-text" class="w-5 h-5"></i> Order
                 </a>
                 <a href="{{ route('layanan.index') }}"
-                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('layanan') ? 'bg-gray-200 font-bold' : '' }}">
-                    Layanan
+                   class="flex items-center gap-2 py-2.5 px-4 border-l-4 transition duration-200 {{ request()->routeIs('layanan.*') ? 'border-blue-500 bg-gray-100 font-bold' : 'border-transparent hover:bg-gray-100' }}">
+                    <i data-lucide="settings" class="w-5 h-5"></i> Layanan
                 </a>
                 <a href="{{ route('pelanggan.index') }}"
-                    class="block py-2.5 px-4 rounded hover:bg-gray-200 {{ request()->is('pelanggan') ? 'bg-gray-200 font-bold' : '' }}">
-                    Pelanggan
+                   class="flex items-center gap-2 py-2.5 px-4 border-l-4 transition duration-200 {{ request()->routeIs('pelanggan.*') ? 'border-blue-500 bg-gray-100 font-bold' : 'border-transparent hover:bg-gray-100' }}">
+                    <i data-lucide="users" class="w-5 h-5"></i> Pelanggan
                 </a>
             </nav>
         </aside>
@@ -88,7 +92,16 @@
     </div>
 
 
+    <script>
+        lucide.createIcons();
+    </script>
 
+<script>
+    document.getElementById('toggleSidebar').addEventListener('click', function () {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('hidden');
+    });
+</script>
 
     @stack('scripts') {{-- Buat tambahan JS kalau perlu --}}
 </body>

@@ -43,6 +43,13 @@
                 <p class="text-lg">{{ $orderan->no_nota }}</p>
             </div>
             <div>
+                @if($orderan->bukti_transfer)
+                <img src="{{ asset('bukti_transfer/' . $orderan->bukti_transfer) }}" class="w-64 rounded" alt="Bukti Transfer">
+            @else
+                <div class="text-red-600">Belum Upload Bukti Transfer</div>
+            @endif
+            </div>
+            <div>
                 <p class="text-gray-600 font-semibold">Status:</p>
                 <span class="inline-block px-3 py-1 text-sm rounded-full
                     @if($orderan->status == 'Proses') bg-yellow-200 text-yellow-800

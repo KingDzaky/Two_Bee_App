@@ -5,7 +5,7 @@
     <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-6">Tambah Orderan</h2>
 
-        <form action="{{ route('orderan.store') }}" method="POST">
+        <form action="{{ route('orderan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="grid grid-cols-2 gap-4">
@@ -66,6 +66,11 @@
                     <label class="block font-medium mb-1">Harga</label>
                     <input type="hidden" name="harga" id="hargaInput">
                     <input type="text" id="hargaInputFormat" class="border p-2 w-full mt-2" readonly>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block font-medium mb-1">Upload Bukti Transfer</label>
+                    <input type="file" name="bukti_transfer" class="border p-2 w-full rounded" accept="image/*">
                 </div>
 
                 <!-- Status -->
