@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
@@ -22,6 +22,22 @@
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
+
+<!-- Foto Profil -->
+<div class="mt-4">
+    <x-input-label for="foto" :value="__('Foto Profil')" />
+    <input id="foto" type="file" name="foto" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
+        accept="image/*">
+    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+
+    @if (Auth::user()->foto)
+        <div class="mt-2">
+            <img src="{{ asset('img/' . Auth::user()->foto) }}" alt="Foto Profil" class="h-20 rounded">
+            <p class="text-sm text-gray-500">Foto saat ini</p>
+        </div>
+    @endif
+</div>
+
 
         <div>
             <x-input-label for="email" :value="__('Email')" />

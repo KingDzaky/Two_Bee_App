@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 
 class OrderanController extends Controller
 {
@@ -132,8 +133,15 @@ class OrderanController extends Controller
 
     public function destroy(Orderan $orderan)
     {
-        $orderan->delete();
-        return redirect()->route('orderan.index')->with('success', 'Orderan berhasil dihapus.');
+          // 🔥 Hapus file bukti transfer jika ada
+    if ($orderan->bukti_transfer && File::exists(public_path('bukti_transfer/' . $orderan->bukti_transfer))) {
+        File::delete(public_path('bukti_transfer/' . $orderan->bukti_transfer));
+    }
+
+    // Hapus data orderan
+    $orderan->delete();
+
+    return redirect()->route('orderan.index')->with('success', 'Orderan berhasil dihapus.');
     }
 
 

@@ -19,6 +19,7 @@
         <div class="mb-3">
             <label class="block font-medium mb-1">Alamat</label>
             <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100" value="{{ $orderan->alamat }}" readonly>
+
         </div>
 
         {{-- Telepon --}}

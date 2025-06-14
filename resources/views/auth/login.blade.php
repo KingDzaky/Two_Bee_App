@@ -3,7 +3,7 @@
         {{-- Logo --}}
         <div>
             <a href="/">
-                <img src="{{ asset('images/logo-cuci-sepatu.jpg') }}" alt="Logo Cuci Sepatu" class="h-200 w-auto">
+                <img src="{{ asset('images/logo-sepatu.jpg') }}" alt="Logo Cuci Sepatu" class="h-200 w-auto">
             </a>
         </div>
 

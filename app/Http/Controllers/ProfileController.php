@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\File;
+
 
 class ProfileController extends Controller
 {
@@ -26,35 +28,68 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+    // Validasi tambahan untuk foto
+    $request->validate([
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    // Cek jika ada file yang diupload
+    if ($request->hasFile('foto')) {
+        // Hapus foto lama jika ada
+        if ($user->foto && File::exists(public_path('img/' . $user->foto))) {
+            File::delete(public_path('img/' . $user->foto));
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Simpan file baru
+        $file = $request->file('foto');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('img'), $filename);
+        $user->foto = $filename;
     }
+
+    // Update data umum (nama, email, dll)
+    $user->fill($request->validated());
+
+    // Jika email berubah, reset verifikasi
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
+    }
+
+    $user->save();
+
+    return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
 
     /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+{
+    $request->validateWithBag('userDeletion', [
+        'password' => ['required', 'current_password'],
+    ]);
 
-        $user = $request->user();
+    $user = $request->user();
 
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+    // 🔥 Hapus foto jika ada
+    if ($user->foto && File::exists(public_path('img/' . $user->foto))) {
+        File::delete(public_path('img/' . $user->foto));
     }
+
+    Auth::logout();
+
+    $user->delete();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return Redirect::to('/');
+}
+
+
+
+
 }

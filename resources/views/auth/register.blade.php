@@ -3,14 +3,14 @@
         {{-- Logo --}}
         <div>
             <a href="/">
-                <img src="{{ asset('images/logo-cuci-sepatu.jpg') }}" alt="Logo Cuci Sepatu" class="h-200 w-auto">
+                <img src="{{ asset('images/logo-sepatu.jpg') }}" alt="Logo Cuci Sepatu" class="h-200 w-auto">
             </a>
         </div>
 
         <div class="w-full sm:max-w-md mt-6 px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <h2 class="text-center text-xl font-semibold mb-4 text-gray-700">Daftar Akun Baru</h2>
 
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Name -->
@@ -25,6 +25,14 @@
                     <x-input-label for="email" :value="__('Email')" />
                     <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
+                <!-- Foto Profil -->
+                <div class="mt-4">
+                    <x-input-label for="foto" :value="__('Foto Profil')" />
+                    <input id="foto" type="file" name="foto" accept="image/*"
+                        class="block mt-1 w-full border border-gray-300 rounded px-3 py-2" required>
+                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
 
                 <!-- Password -->

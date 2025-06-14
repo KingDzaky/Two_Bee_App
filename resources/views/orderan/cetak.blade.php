@@ -52,7 +52,7 @@
 
     <!-- Logo -->
     <div class="header">
-        <img src="{{ public_path('images/logo-cuci-sepatu.jpg') }}" alt="Logo">
+        <img src="{{ public_path('images/logo-sepatu.jpg') }}" alt="Logo">
         <h2>INVOICE ORDERAN</h2>
     </div>
 
