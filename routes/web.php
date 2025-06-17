@@ -13,6 +13,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::post('/dashboard/export-pdf', [DashboardController::class, 'exportPdf'])
+    ->name('dashboard.exportPdf');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/orderan/{orderan}/cetak-pdf', [OrderanController::class, 'cetakPdf'])->name('orderan.cetakPdf');
     Route::get('/orderan/cetak-semua', [OrderanController::class, 'cetakSemua'])->name('orderan.cetakSemua');
     Route::post('/orderan/{orderan}/upload-bukti', [OrderanController::class, 'uploadBukti'])->name('orderan.uploadBukti');
+
 });
 
 //all resource routing goes below

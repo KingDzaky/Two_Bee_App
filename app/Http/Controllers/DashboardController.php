@@ -7,11 +7,18 @@ use App\Models\Orderan;
 use App\Models\Layanan;
 use App\Models\Pelanggan;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+
+
+
+
         $jumlahPelanggan = Pelanggan::count();
         $jumlahOrder = Orderan::count();
         $totalPendapatan = Orderan::sum('harga');
@@ -36,6 +43,22 @@ class DashboardController extends Controller
         //     return $item;
         // });
 
+        $now = Carbon::now();
+    $labels = [];
+    $data = [];
+
+    for ($i = 6; $i >= 0; $i--) {
+        $day = $now->copy()->subDays($i)->format('d M');
+        $labels[] = $day;
+        $count = User::whereDate('created_at', $now->copy()->subDays($i))->count();
+        $data[] = $count;
+    }
+
+    $orderanChart = [
+        'labels' => $labels,
+        'data' => $data
+    ];
+
         $orderanChart = DB::table('orderans')
         ->select('status', 'tanggal', DB::raw('SUM(harga) as total_pendapatan, COUNT(*) as total_order'))
         ->where('status', '=', 'Diantar')
@@ -58,6 +81,20 @@ class DashboardController extends Controller
             'orderDiantar',
             'orderanChart',
             'layananFavorit'
+
+
+
+
+
         ));
     }
+
+    public function exportPdf(Request $request)
+{
+    $chartImage = $request->input('chartImage');
+
+    return Pdf::loadView('dashboard.pdf-chart', [
+        'chartImage' => $chartImage
+    ])->download('chart-dashboard.pdf');
+}
 }

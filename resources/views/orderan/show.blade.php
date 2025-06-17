@@ -75,7 +75,7 @@
                 <i class="fas fa-arrow-left mr-1"></i> Kembali
             </a>
 
-            <a href="{{ route('orderan.cetakPdf', $orderan->id) }}" target="_blank">
+            <a href="{{ route('orderan.cetakPdf', $orderan->id) }}" class="inline-block bg-red-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" target="_blank">
                 <button>Cetak PDF</button>
             </a>
 

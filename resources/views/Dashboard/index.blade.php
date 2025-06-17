@@ -52,6 +52,14 @@
         <canvas id="layananChart" height="100"></canvas>
     </div>
 
+    <form id="exportChartForm" method="POST" action="{{ route('dashboard.exportPdf') }}">
+        @csrf
+        <input type="hidden" name="chartImage" id="chartImageInput">
+        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+            Export PDF Chart
+        </button>
+    </form>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -104,5 +112,47 @@
         }
     });
 </script>
+
+<script>
+    const ctx = document.getElementById('orderanChart').getContext('2d');
+
+    const orderanChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {!! json_encode($orderanChart['labels'] ?? []) !!},
+            datasets: [{
+                label: 'Order Masuk per Hari',
+                data: {!! json_encode($orderanChart['data'] ?? []) !!},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+    const form = document.getElementById('exportChartForm');
+    const chartImageInput = document.getElementById('chartImageInput');
+
+    form.addEventListener('submit', function (e) {
+        const canvas = document.getElementById('orderanChart');
+        const dataURL = canvas.toDataURL('image/png');
+        chartImageInput.value = dataURL;
+    });
+</script>
+
 
 @endsection
