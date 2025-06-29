@@ -14,6 +14,11 @@
         </div>
 
         <div>
+            <label for="nama_layanan" class="block font-medium mb-1">Deskripsi</label>
+            <input type="text" id="deskripsi" name="deskripsi" value="{{ $layanan->deskripsi }}" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+
+        <div>
             <label for="harga" class="block font-medium mb-1">Harga (Rp)</label>
             <input type="number" id="harga" name="harga" value="{{ $layanan->harga }}" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
