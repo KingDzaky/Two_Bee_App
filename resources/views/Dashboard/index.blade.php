@@ -45,13 +45,7 @@
 
     </div>
 
-
-
-    <div class="bg-white p-6 rounded shadow mt-6">
-        <h2 class="text-lg font-semibold mb-2">Layanan Paling Sering Digunakan</h2>
-        <canvas id="layananChart" height="100"></canvas>
-    </div>
-
+    <div class="mt-3">
     <form id="exportChartForm" method="POST" action="{{ route('dashboard.exportPdf') }}">
         @csrf
         <input type="hidden" name="chartImage" id="chartImageInput">
@@ -59,10 +53,48 @@
             Export PDF Chart
         </button>
     </form>
+</div>
+
+
+    <div class="bg-white p-6 rounded shadow mt-6">
+        <h2 class="text-lg font-semibold mb-2">Layanan Paling Sering Digunakan</h2>
+        <canvas id="layananChart" height="100"></canvas>
+    </div>
+
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('exportChartForm');
+        const chartImageInput = document.getElementById('chartImageInput');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const canvas = document.getElementById('orderChart'); // ✅ ID SUDAH SAMA
+            if (!canvas) {
+                alert('Chart tidak ditemukan');
+                return;
+            }
+
+            const dataURL = canvas.toDataURL('image/png');
+            chartImageInput.value = dataURL;
+
+            setTimeout(() => {
+                form.submit();
+            }, 100);
+        });
+    });
+</script>
+
+
+
+
+
 <script>
     const ctx = document.getElementById('orderChart').getContext('2d');
     const chart = new Chart(ctx, {
@@ -113,46 +145,9 @@
     });
 </script>
 
-<script>
-    const ctx = document.getElementById('orderanChart').getContext('2d');
 
-    const orderanChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {!! json_encode($orderanChart['labels'] ?? []) !!},
-            datasets: [{
-                label: 'Order Masuk per Hari',
-                data: {!! json_encode($orderanChart['data'] ?? []) !!},
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            }
-        }
-    });
-</script>
 
-<script>
-    const form = document.getElementById('exportChartForm');
-    const chartImageInput = document.getElementById('chartImageInput');
 
-    form.addEventListener('submit', function (e) {
-        const canvas = document.getElementById('orderanChart');
-        const dataURL = canvas.toDataURL('image/png');
-        chartImageInput.value = dataURL;
-    });
-</script>
 
 
 @endsection
